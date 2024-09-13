@@ -1,0 +1,34 @@
+.match-list-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .match-list-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .match-list-container ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .match-list-container li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .match-list-container a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .match-list-container a:hover {
+    text-decoration: underline;
+  }
+  

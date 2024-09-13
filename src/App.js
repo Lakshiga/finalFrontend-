@@ -1,24 +1,29 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from '../src/components /Login';
+import Register from '../src/components /Register';
+import CreateMatch from '../src/components /CreateMatch';
+import UpdateScore from '../src/components /UpdateScore';
+import ViewMatch from '../src/components /ViewMatches';
+import MatchList from '../src/components /MatchList';
+import OrganizerLogin from '../src/components /OrganizerLogin';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/organizer-login" element={<OrganizerLogin />} />  
+          <Route path="/register" element={<Register />} />
+          <Route path="/create-match" element={<CreateMatch />} />
+          <Route path="/update-score/:id" element={<UpdateScore />} />
+          <Route path="/view-match/:id" element={<ViewMatch />} />
+          <Route path="/matches" element={<MatchList />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

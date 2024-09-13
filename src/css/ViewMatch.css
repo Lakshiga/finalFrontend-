@@ -1,0 +1,24 @@
+.view-match-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .view-match-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .view-match-container p {
+    margin: 10px 0;
+    font-size: 16px;
+  }
+  
+  .view-match-container .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  
