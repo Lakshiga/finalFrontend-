@@ -8,6 +8,7 @@ function App() {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,10 +24,10 @@ function App() {
     try {
       // Send the data to the backend API
       const response = await axios.post('http://localhost:5000/api/users/register', newUser);
-      console.log('Response from server:', response);
       
       if (response.status === 200) {
-        alert('User registered successfully!');
+        setSuccess('User registered successfully!');
+        alert('Registration successful!');
         // Clear the form after success
         setName('');
         setEmail('');
@@ -45,6 +46,8 @@ function App() {
   return (
     <div className="App-register">
       <h1>Register</h1>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {success && <p style={{ color: 'green' }}>{success}</p>}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -105,8 +108,6 @@ function App() {
 
         <button type="submit">Register</button>
       </form>
-
-      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 }

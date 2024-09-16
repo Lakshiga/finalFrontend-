@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import '/home/uki-admin02/Documents/Lachchu/Match Lachchu final/Match Lachchu/Match /frontend/src/css/AdminDashboard.css';
 
 const AdminDashboard = () => {
   const [organizers, setOrganizers] = useState([]);
@@ -11,8 +12,13 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const organizersRes = await axios.get('http://localhost:5000/api/admin/organizers');
-        const matchesRes = await axios.get('http://localhost:5000/api/admin/matches');
+        const token = localStorage.getItem('token'); // Ensure the token is sent in headers
+        const organizersRes = await axios.get('http://localhost:5000/api/admin/organizers', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const matchesRes = await axios.get('http://localhost:5000/api/admin/matches', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setOrganizers(organizersRes.data);
         setMatches(matchesRes.data);
         setLoading(false);
@@ -27,7 +33,10 @@ const AdminDashboard = () => {
   // Handle organizer verification
   const verifyOrganizer = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/admin/organizer/${id}/verify`);
+      const token = localStorage.getItem('token'); // Ensure the token is sent in headers
+      await axios.put(`http://localhost:5000/api/admin/organizer/${id}/verify`, null, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setOrganizers(organizers.map(org => org._id === id ? { ...org, verified: true } : org));
     } catch (error) {
       setError('Verification failed.');
@@ -62,7 +71,8 @@ const AdminDashboard = () => {
         {matches.length > 0 ? (
           matches.map((match) => (
             <div key={match._id}>
-              {match.player1} vs {match.player2}
+              Match: {match.player1} vs {match.player2} - {match.status}
+              {/* Additional match details and actions can be added here */}
             </div>
           ))
         ) : (
@@ -74,3 +84,6 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
+
+     

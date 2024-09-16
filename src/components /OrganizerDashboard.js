@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import '/home/uki-admin02/Documents/Lachchu/Match Lachchu final/Match Lachchu/Match /frontend/src/css/OrganizerDashboard.css';
 
 const OrganizerDashboard = () => {
   const [eventData, setEventData] = useState({

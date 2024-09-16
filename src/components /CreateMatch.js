@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../css/CreateMatch.css'; // Import the CSS file
+import '/home/uki-admin02/Documents/Lachchu/Match Lachchu final/Match Lachchu/Match /frontend/src/css/CreateMatch.css'; // Import the CSS file
 
 const CreateMatch = () => {
   const [name, setName] = useState('');
