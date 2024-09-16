@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../css/ViewMatch.css'; // Import the CSS file
+import '../css/ViewMatches.css'; // Import the CSS file
 import { useParams } from 'react-router-dom';
 
 const ViewMatch = () => {

@@ -43,7 +43,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="App-register">
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
         <input
