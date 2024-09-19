@@ -1,89 +1,106 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import '/home/uki-admin02/Documents/Lachchu/Match Lachchu final/Match Lachchu/Match /frontend/src/css/AdminDashboard.css';
 
 const AdminDashboard = () => {
   const [organizers, setOrganizers] = useState([]);
-  const [matches, setMatches] = useState([]);
+  const [verifyingOrganizer, setVerifyingOrganizer] = useState(null); // Store verifying organizer ID
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  // Fetch organizers and matches
+  const token = localStorage.getItem('token'); // Retrieve token from localStorage
+
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchOrganizers = async () => {
       try {
-        const token = localStorage.getItem('token'); // Ensure the token is sent in headers
-        const organizersRes = await axios.get('http://localhost:5000/api/admin/organizers', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const matchesRes = await axios.get('http://localhost:5000/api/admin/matches', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setOrganizers(organizersRes.data);
-        setMatches(matchesRes.data);
-        setLoading(false);
-      } catch (error) {
-        setError('Failed to fetch data.');
-        setLoading(false);
+        const config = { headers: { Authorization: `Bearer ${token}` } };
+        const res = await axios.get('http://localhost:5000/api/admin/unverified-organizers', config);
+        setOrganizers(res.data);
+      } catch (err) {
+        console.error('Error fetching unverified organizers:', err);
+        if (err.response && err.response.status === 401) {
+          navigate('/login'); // Redirect to login if unauthorized
+        } else {
+          setError('Failed to load organizers. Please try again later.');
+        }
+      } finally {
+        setLoading(false); // Stop loading spinner
       }
     };
-    fetchData();
-  }, []);
+    fetchOrganizers();
+  }, [token, navigate]);
 
-  // Handle organizer verification
   const verifyOrganizer = async (id) => {
+    setVerifyingOrganizer(id); // Show "Verifying..." for the specific organizer
     try {
-      const token = localStorage.getItem('token'); // Ensure the token is sent in headers
-      await axios.put(`http://localhost:5000/api/admin/organizer/${id}/verify`, null, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setOrganizers(organizers.map(org => org._id === id ? { ...org, verified: true } : org));
-    } catch (error) {
-      setError('Verification failed.');
+      const config = { headers: { Authorization: `Bearer ${token}` } };
+      await axios.put(`http://localhost:5000/api/admin/verify/${id}`, {}, config);
+      // Remove verified organizer from the list
+      setOrganizers((prev) => prev.filter((org) => org._id !== id));
+      alert('Organizer verified successfully!');
+    } catch (err) {
+      console.error('Error verifying organizer:', err);
+      setError('Failed to verify organizer.');
+    } finally {
+      setVerifyingOrganizer(null); // Reset verifying state
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) {
+    return <div className="loading">Loading...</div>; // Loading spinner
+  }
 
   return (
     <div className="admin-dashboard">
-      <h2>Admin Dashboard</h2>
+      <header>
+        <h1>Admin Dashboard</h1>
+      </header>
 
-      <section>
-        <h3>Organizers</h3>
-        {organizers.length > 0 ? (
-          organizers.map((org) => (
-            <div key={org._id}>
-              {org.name} - {org.verified ? 'Verified' : 'Pending'}
-              {!org.verified && (
-                <button onClick={() => verifyOrganizer(org._id)}>Verify</button>
-              )}
-            </div>
-          ))
-        ) : (
-          <p>No organizers found</p>
-        )}
-      </section>
+      {error && <p className="error-message">{error}</p>}
 
-      <section>
-        <h3>Matches</h3>
-        {matches.length > 0 ? (
-          matches.map((match) => (
-            <div key={match._id}>
-              Match: {match.player1} vs {match.player2} - {match.status}
-              {/* Additional match details and actions can be added here */}
-            </div>
-          ))
-        ) : (
-          <p>No matches found</p>
-        )}
-      </section>
+      <h2>Unverified Organizers</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Organization</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {organizers.length > 0 ? (
+            organizers.map((org) => (
+              <tr key={org._id}>
+                <td>{org.name}</td>
+                <td>{org.email}</td>
+                <td>{org.organizationName}</td>
+                <td>
+                  <button
+                    onClick={() => verifyOrganizer(org._id)}
+                    disabled={verifyingOrganizer === org._id}
+                  >
+                    {verifyingOrganizer === org._id ? 'Verifying...' : 'Verify'}
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="4">No unverified organizers found.</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+
+      <footer>
+        <p>Admin Dashboard © 2024</p>
+      </footer>
     </div>
   );
 };
 
 export default AdminDashboard;
-
-
-     
