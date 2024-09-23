@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../css/Login.css';
 
 const Login = () => {
@@ -13,29 +13,42 @@ const Login = () => {
     e.preventDefault();
 
     try {
+      // Send login request to the backend
       const res = await axios.post('http://localhost:5000/api/users/login', {
         email,
         password,
       });
 
+      console.log(res.data); // Debugging: Log the response data
+
       if (res.data.token) {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('role', res.data.role); // Store role (admin, organizer, etc.)
+        const { token, role, isVerified } = res.data;
 
-        alert(res.data.msg);
+        // Store the token and user details in localStorage
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify({ role, isVerified }));
 
-        if (res.data.role === 'admin') {
-          navigate('/admin-dashboard');
-        } else if (res.data.role === 'organizer') {
+        // Check if the user is an organizer and verified
+        if (role === 'organizer' && isVerified) {
+          alert('Login successful as verified organizer.');
+          console.log('Navigating to organizer dashboard'); // Debugging
           navigate('/organizer-dashboard');
+        } else if (role === 'organizer' && !isVerified) {
+          setError('Your account is not verified yet. Please wait for admin approval.');
+        } else if (role === 'admin') {
+          alert('Login successful as admin.');
+          console.log('Navigating to admin dashboard'); // Debugging
+          navigate('/admin-dashboard');
         } else {
+          console.log('Navigating to home page'); // Debugging
           navigate('/'); // Default redirect for other roles
         }
       } else {
-        setError('Login failed. Please try again.');
+        setError('Login failed. Invalid credentials.');
       }
     } catch (err) {
-      setError('Invalid credentials. Please check your email and password.');
+      console.error(err); // Log the error for debugging
+      setError('Login failed. Please check your email and password.');
     }
   };
 

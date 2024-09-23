@@ -5,7 +5,7 @@
   margin: 0 auto;
   background-color: #b9dcec;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(12, 40, 94, 0.1);
 }
 
 header {
@@ -23,7 +23,7 @@ header h1 {
 
 h2 {
   font-size: 1.8rem;
-  color: #007BFF;
+  color: #06305c;
   margin-bottom: 20px;
 }
 
@@ -36,7 +36,7 @@ table {
 }
 
 table thead {
-  background-color: #007BFF;
+  background-color: #0a3869;
   color: #fff;
 }
 
@@ -62,7 +62,7 @@ button {
 }
 
 button:hover {
-  background-color: #105575;
+  background-color: #3aade2;
 }
 
 button:disabled {
@@ -79,7 +79,7 @@ button:disabled {
 .loading {
   text-align: center;
   font-size: 1.5rem;
-  color: #007BFF;
+  color: #052b53;
 }
 
 footer {
