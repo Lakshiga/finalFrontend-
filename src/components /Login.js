@@ -19,35 +19,40 @@ const Login = () => {
         password,
       });
 
-      console.log(res.data); // Debugging: Log the response data
+      if (res.data.token || res.data.isVerified === false) {
+        const { token, role, isVerified, msg } = res.data;
 
-      if (res.data.token) {
-        const { token, role, isVerified } = res.data;
 
-        // Store the token and user details in localStorage
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify({ role, isVerified }));
+      if (msg) {
+        alert(msg); // Use the msg variable to display the message
+      }
+      
+        if (token) {
+          // Store the token and user details in localStorage
+          localStorage.setItem('token', token);
+          localStorage.setItem('user', JSON.stringify({ role, isVerified }));
 
-        // Check if the user is an organizer and verified
-        if (role === 'organizer' && isVerified) {
-          alert('Login successful as verified organizer.');
-          console.log('Navigating to organizer dashboard'); // Debugging
-          navigate('/organizer-dashboard');
-        } else if (role === 'organizer' && !isVerified) {
-          setError('Your account is not verified yet. Please wait for admin approval.');
-        } else if (role === 'admin') {
-          alert('Login successful as admin.');
-          console.log('Navigating to admin dashboard'); // Debugging
-          navigate('/admin-dashboard');
-        } else {
-          console.log('Navigating to home page'); // Debugging
-          navigate('/'); // Default redirect for other roles
+          // Check login logic based on role
+          if (role === 'Organizer') {
+            alert('Login successful as organizer.');
+            navigate('/organizer-dashboard');
+          } else if (role === 'admin') {
+            alert('Login successful as admin.');
+            navigate('/admin-dashboard');
+          } else {
+            // For normal users (players, umpires)
+            alert('Login successful.');
+            navigate('/'); // Redirect to home or relevant dashboard for players, umpires
+          }
+        } else if (!isVerified && role === 'Organizer') {
+          // Handle the unverified organizer
+          alert('Login successful as organizer, but waiting for admin verification.');
+          navigate('/organizer-dashboard'); // Navigate to the organizer dashboard but show waiting message
         }
       } else {
         setError('Login failed. Invalid credentials.');
       }
     } catch (err) {
-      console.error(err); // Log the error for debugging
       setError('Login failed. Please check your email and password.');
     }
   };

@@ -35,7 +35,6 @@ const UmpireDashboard = ({ umpireId }) => {
   return (
     <div>
       <h2>Umpire Dashboard</h2>
-      
       <h3>Assigned Matches</h3>
       {matches.length > 0 ? (
         matches.map((match) => (

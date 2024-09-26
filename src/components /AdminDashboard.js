@@ -41,7 +41,7 @@ const AdminDashboard = () => {
       await axios.put(`http://localhost:5000/api/users/AllUser/${id}/verify`, {}, config);
       // Remove verified organizer from the list
       setUnverifiedOrganizers((prev) => prev.filter((org) => org._id !== id));
-      alert('Organizer verified successfully!,Organizer can now access their dashboard. ');
+      alert('Organizer verified successfully! Organizer can now access their dashboard.');
     } catch (err) {
       console.error('Error verifying organizer:', err);
       setError('Failed to verify organizer.');
@@ -120,15 +120,14 @@ const AdminDashboard = () => {
                 <td>{org.email}</td>
                 <td>
                   <button
-                     onClick={() => {
-                     console.log('Verifying organizer:', org._id); // Debugging step
-                     verifyOrganizer(org._id);
-                     }}
-                     disabled={verifyingOrganizer === org._id}
-                     >  
-                     {verifyingOrganizer === org._id ? 'Verifying...' : 'Verify'}
-                   </button>
-
+                    onClick={() => {
+                      console.log('Verifying organizer:', org._id); // Debugging step
+                      verifyOrganizer(org._id);
+                    }}
+                    disabled={verifyingOrganizer === org._id}
+                  >  
+                    {verifyingOrganizer === org._id ? 'Verifying...' : 'Verify'}
+                  </button>
                 </td>
               </tr>
             ))
