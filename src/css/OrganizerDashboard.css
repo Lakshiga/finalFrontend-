@@ -1,70 +1,131 @@
 /* OrganizerDashboard.css */
 
-.organizer-dashboard {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  header {
-    background-color: #2ef8f8;
-    color: #fff;
-    padding: 15px;
-    text-align: center;
-  }
-  
-  header h1 {
-    margin: 0;
-    font-size: 2rem;
-  }
-  
-  nav {
-    margin-top: 15px;
-  }
-  
-  nav ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  nav ul li {
-    display: inline;
-    margin-right: 15px;
-  }
-  
-  nav ul li a {
-    color: #061468;
-    text-decoration: none;
-    font-size: 1.1rem;
-  }
-  
-  main {
-    margin-top: 20px;
-  }
-  
-  section {
-    margin-bottom: 20px;
-  }
-  
-  section h2 {
-    font-size: 1.8rem;
-    color: #28a745;
-  }
-  
-  section p {
-    font-size: 1.1rem;
-    color: #333;
-  }
-  
-  footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #f8f9fa;
-  }
-  
-  footer p {
-    font-size: 0.9rem;
-    color: #888;
-  }
-  
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+.OrganizerDashboard {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #444;
+  margin-top: 20px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+form div {
+  margin-bottom: 15px;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+input,
+select {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #0b2546;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #3bb2cf;
+}
+
+.success-message {
+  color: #28a745;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.error-message {
+  color: #dc3545;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th,
+table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.verify-btn {
+  padding: 8px 12px;
+  color: #fff;
+  background-color: #052950;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.verify-btn:hover {
+  background-color: #46b4cf;
+}
+
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: #888;
+}
+
+.waiting-verification {
+  text-align: center;
+  font-size: 18px;
+  color: #ff5722;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '/home/uki-admin02/Documents/Lachchu/Match Lachchu final/Match Lachchu/Match /frontend/src/css/HomePage.css'; // Ensure this path is correct
+import '../css/HomePage.css'; // Ensure this path is correct
 
 const HomePage = () => {
   return (

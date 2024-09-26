@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomePage from './components /HomePage';
-import About from './components /About';
-import Login from './components /Login';
-import Register from './components /Register';
-import CreateMatch from './components /CreateMatch';
-import UpdateScore from './components /UpdateScore';
-import ViewMatch from '../src/components /ViewMatches';
-import MatchList from './components /MatchList';
-import OrganizerLogin from './components /OrganizerLogin';
-import AdminDashboard from './components /AdminDashboard';
-import OrganizerDashboard from './components /OrganizerDashboard';
-import PrivateRoute from './components /PrivateRoute';
-import ProtectedRoute from './components /ProtectedRoute'; // Import the ProtectedRoute
+import HomePage from './components/HomePage';
+import About from './components/About';
+import Login from './components/Login';
+import Register from './components/Register';
+import CreateMatch from './components/CreateMatch';
+import UpdateScore from './components/UpdateScore';
+import ViewMatch from './components/ViewMatches';
+import MatchList from './components/MatchList';
+import OrganizerLogin from './components/OrganizerLogin';
+import AdminDashboard from './components/AdminDashboard';
+import OrganizerDashboard from './components/OrganizerDashboard';
+import PrivateRoute from './components/PrivateRoute';
+import ProtectedRoute from './components/ProtectedRoute'; // Import the ProtectedRoute
 import './App.css';
 
 function App() {
@@ -63,6 +63,7 @@ function App() {
           />
 
           {/* Protect Organizer Dashboard */}
+          
           <Route
             path="/organizer-dashboard"
             element={

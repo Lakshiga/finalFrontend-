@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '/home/uki-admin02/Documents/Lachchu/Match Lachchu final/Match Lachchu/Match /frontend/src/css/CreateEvent.css'; // Import the CSS file
+import '../css/CreateEvent.css'; // Import the CSS file
 
 const CreateEvent = () => {
   const [eventName, setEventName] = useState('');

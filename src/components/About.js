@@ -1,5 +1,5 @@
 import React from 'react';
-import '/home/uki-admin02/Documents/Lachchu/Match Lachchu final/Match Lachchu/Match /frontend/src/css/About.css'; // Ensure you have an About.css file for styling
+import '../css/About.css'; // Ensure you have an About.css file for styling
 
 const About = () => {
   return (
