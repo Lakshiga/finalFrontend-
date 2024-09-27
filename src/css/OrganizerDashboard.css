@@ -1,145 +1,176 @@
-/* OrganizerDashboard.css */
-
+/* General Body Styling */
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #6dd6e4;
+  background-color: #6dd6e4; /* Soft blue background for the body */
 }
 
+/* Main Dashboard Container */
 .organizer-dashboard {
   padding: 20px;
   max-width: 1200px;
-  margin: 0 auto;
-  background-color: #a6f0ec;
+  margin: 20px auto; /* Adds some space above and below */
+  background-color: #a6f0ec; /* Light teal background for the dashboard */
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Slightly softer shadow for depth */
 }
 
+/* Title Styling */
 .dashboard-title {
   text-align: center;
   color: #333;
+  font-size: 24px;
   margin-bottom: 20px;
+  font-weight: bold;
 }
 
+/* Check Verification Button */
 .check-verification-btn {
   display: block;
   margin: 20px auto;
-  padding: 10px 20px;
-  background-color: #042d58;
+  padding: 12px 24px; /* Slightly larger padding for better touch targets */
+  background-color: #042d58; /* Dark blue for primary action */
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease-in-out; /* Smooth transition on hover */
 }
 
 .check-verification-btn:hover {
-  background-color: #36c7d1;
+  background-color: #36c7d1; /* Bright cyan hover effect */
 }
-
+/* Forms Section */
 .dashboard-forms {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: space-around;
 }
 
+/* Form Container Styling */
 .form-container {
-  flex: 1;
-  min-width: 300px;
+  flex: 1 1 45%;
+  background-color: #ffffff; /* White background for contrast */
   padding: 20px;
-  border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #fafafa;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
-  color: #555;
-  margin-bottom: 15px;
+/* Form Titles */
+.form-container h2 {
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #042d58; /* Consistent with the button color */
 }
 
+/* Form Group */
 .form-group {
   margin-bottom: 15px;
 }
 
-label {
+/* Form Labels */
+.form-group label {
   display: block;
   margin-bottom: 5px;
-  color: #666;
+  font-weight: bold;
+  color: #333;
 }
 
-input,
-select {
-  width: calc(100% - 22px);
-  padding: 8px 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
+/* Form Inputs */
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  box-sizing: border-box;
+  font-size: 14px;
+  color: #333;
 }
 
+/* Submit Buttons */
 .submit-btn {
   width: 100%;
   padding: 10px;
-  background-color: #042d58;
+  background-color: #36c7d1; /* Bright cyan for the submit button */
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .submit-btn:hover {
-  background-color: #36c7d1;
+  background-color: #29a8b0; /* Slightly darker cyan on hover */
 }
 
-.verification-message {
-  text-align: center;
-  color: #ff9800;
+/* Verification Lists */
+.verification-lists {
+  margin-top: 30px;
 }
 
-.verification-item {
+/* Verification Tables */
+.verification-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.verification-table th,
+.verification-table td {
   padding: 10px;
-  margin: 10px 0;
+  text-align: left;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f8f9fa;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
+.verification-table th {
+  background-color: #36c7d1;
+  color: white;
+}
+
+/* Verify Buttons */
 .verify-btn {
-  padding: 5px 10px;
-  background-color: #17a2b8;
+  padding: 8px 16px;
+  background-color: #28a745; /* Green color for verify action */
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .verify-btn:hover {
-  background-color: #138496;
+  background-color: #218838; /* Darker green on hover */
 }
 
-.no-verifications {
-  color: #888;
+/* Success and Error Messages */
+.success-message,
+.error-message {
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
 }
 
 .success-message {
-  color: green;
-  margin: 10px 0;
+  background-color: #d4edda; /* Light green for success */
+  color: #155724;
+  border: 1px solid #c3e6cb;
 }
 
 .error-message {
-  color: red;
-  margin: 10px 0;
+  background-color: #f8d7da; /* Light red for error */
+  color: #721c24;
+  border: 1px solid #f5c6cb;
 }
 
+/* Loading Message */
 .loading {
   text-align: center;
-  color: #555;
   font-size: 18px;
+  color: #042d58;
 }

@@ -68,7 +68,7 @@ main {
 
 .hero {
     text-align: center;
-    background: url('/home/uki-admin02/Documents/Lachchu/Match Lachchu final/Match Lachchu/Match /frontend/src/images/sports.jpg') no-repeat center center;
+    background: url('../images/sports.jpg') no-repeat center center;
     background-size: cover;
     color: #fff;
     padding: 4rem 1rem;

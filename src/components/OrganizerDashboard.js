@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../css/OrganizerDashboard.css'; // Make sure this path matches your file structure
+import '../css/OrganizerDashboard.css'; // Adjust this path based on your file structure
 
 const OrganizerDashboard = () => {
   const [eventData, setEventData] = useState({
     name: '',
     matchType: 'League',
     players: '',
-    umpires: ''
+    umpires: '',
   });
   const [matchData, setMatchData] = useState({
     eventName: '',
     player1: '',
     player2: '',
-    umpire: ''
+    umpire: '',
   });
   const [umpireVerifications, setUmpireVerifications] = useState([]);
   const [playerVerifications, setPlayerVerifications] = useState([]);
@@ -25,48 +25,36 @@ const OrganizerDashboard = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
-  // Fetch organizer status, umpire, and player verifications
   useEffect(() => {
-    const fetchOrganizerStatus = async () => {
+    const fetchData = async () => {
+      setLoading(true);
       try {
         const config = { headers: { Authorization: `Bearer ${token}` } };
-        const res = await axios.get('http://localhost:5000/api/organizer/organizer/status', config);
-        setIsVerified(res.data.verified);
+
+        // Fetch organizer status
+        const organizerStatus = await axios.get('http://localhost:5000/api/organizer/organizer/status', config);
+        setIsVerified(organizerStatus.data.verified);
+
+        // Fetch umpire verifications
+        const umpireRes = await axios.get('http://localhost:5000/api/organizer/unverified-umpires', config);
+        setUmpireVerifications(umpireRes.data);
+
+        // Fetch player verifications
+        const playerRes = await axios.get('http://localhost:5000/api/organizer/unverified-players', config);
+        setPlayerVerifications(playerRes.data);
+
       } catch (error) {
-        console.error('Error fetching organizer status:', error);
-        setError('Failed to load organizer status');
+        console.error('Error fetching data:', error);
+        setError('Failed to load data.');
         if (error.response && error.response.status === 401) {
           navigate('/login');
         }
+      } finally {
+        setLoading(false);
       }
     };
 
-    const fetchUmpireVerifications = async () => {
-      try {
-        const config = { headers: { Authorization: `Bearer ${token}` } };
-        const res = await axios.get('http://localhost:5000/api/organizer/unverified-umpires', config);
-        setUmpireVerifications(res.data);
-      } catch (error) {
-        console.error('Error fetching umpire verifications:', error);
-        setError('Failed to load umpire verifications');
-      }
-    };
-
-    const fetchPlayerVerifications = async () => {
-      try {
-        const config = { headers: { Authorization: `Bearer ${token}` } };
-        const res = await axios.get('http://localhost:5000/api/organizer/unverified-players', config);
-        setPlayerVerifications(res.data);
-      } catch (error) {
-        console.error('Error fetching player verifications:', error);
-        setError('Failed to load player verifications');
-      }
-    };
-
-    fetchOrganizerStatus();
-    fetchUmpireVerifications();
-    fetchPlayerVerifications();
-    setLoading(false);
+    fetchData();
   }, [token, navigate]);
 
   // Event form change handler
@@ -85,6 +73,7 @@ const OrganizerDashboard = () => {
     const players = eventData.players.split(',').map((p) => p.trim());
     const umpires = eventData.umpires.split(',').map((u) => u.trim());
 
+    // Ensure all players and umpires are verified
     const allPlayersVerified = players.every((player) =>
       playerVerifications.some((p) => p.name === player && p.verified)
     );
@@ -101,17 +90,21 @@ const OrganizerDashboard = () => {
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       };
 
-      const res = await axios.post('http://localhost:5000/api/events/create-event', { ...eventData, players, umpires }, config);
+      const res = await axios.post(
+        'http://localhost:5000/api/events/create-event',
+        { ...eventData, players, umpires },
+        config
+      );
 
       if (res.status === 201) {
         setSuccess('Event created successfully!');
         setEventData({ name: '', matchType: 'League', players: '', umpires: '' });
       } else {
-        setError('Failed to create event');
+        setError('Failed to create event.');
       }
     } catch (err) {
       setError(err.response?.data?.msg || 'Server error');
@@ -132,17 +125,21 @@ const OrganizerDashboard = () => {
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       };
 
-      const res = await axios.post('http://localhost:5000/api/matches/create-match', { eventName, player1, player2, umpire }, config);
+      const res = await axios.post(
+        'http://localhost:5000/api/matches/create-match',
+        { eventName, player1, player2, umpire },
+        config
+      );
 
       if (res.status === 201) {
         setSuccess('Match created successfully!');
         setMatchData({ eventName: '', player1: '', player2: '', umpire: '' });
       } else {
-        setError('Failed to create match');
+        setError('Failed to create match.');
       }
     } catch (err) {
       setError(err.response?.data?.msg || 'Server error');
@@ -150,12 +147,10 @@ const OrganizerDashboard = () => {
   };
 
   // Check Organizer Verification Status
-  const checkVerificationStatus = async () => {
-    if (isVerified) {
-      return; // Already verified, no action needed
+  const checkVerificationStatus = () => {
+    if (!isVerified) {
+      alert('Please wait for admin verification.');
     }
-
-    alert('Please wait for admin verification.');
   };
 
   // Verify Umpire Handler
@@ -167,7 +162,7 @@ const OrganizerDashboard = () => {
       alert('Umpire verified successfully');
     } catch (error) {
       console.error('Error verifying umpire:', error);
-      setError('Failed to verify umpire');
+      setError('Failed to verify umpire.');
     }
   };
 
@@ -180,11 +175,11 @@ const OrganizerDashboard = () => {
       alert('Player verified successfully');
     } catch (error) {
       console.error('Error verifying player:', error);
-      setError('Failed to verify player');
+      setError('Failed to verify player.');
     }
   };
 
-  // Loading state
+  // Display loading message if data is still being fetched
   if (loading) {
     return <div className="loading">Loading...</div>;
   }
@@ -248,38 +243,61 @@ const OrganizerDashboard = () => {
           </div>
         </div>
       ) : (
-        <p className="verification-message">Please wait for admin verification.</p>
+        <p>Please wait for verification before you can manage events and matches.</p>
       )}
 
-      {/* Displaying Umpire Verification List */}
-      <h2>Verify Umpires</h2>
-      {umpireVerifications.length > 0 ? (
-        umpireVerifications.map((umpire) => (
-          <div key={umpire._id} className="verification-item">
-            <p>Name: {umpire.name}</p>
-            <button className="verify-btn" onClick={() => verifyUmpire(umpire._id)}>Verify</button>
-          </div>
-        ))
-      ) : (
-        <p className="no-verifications">No umpires pending verification.</p>
-      )}
+      <div className="verification-lists">
+        <h2>Umpire Verifications</h2>
+        <table className="verification-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {umpireVerifications.map((umpire) => (
+              <tr key={umpire._id}>
+                <td>{umpire.name}</td>
+                <td>{umpire.email}</td>
+                <td>
+                  <button className="verify-btn" onClick={() => verifyUmpire(umpire._id)}>
+                    Verify
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-      {/* Displaying Player Verification List */}
-      <h2>Verify Players</h2>
-      {playerVerifications.length > 0 ? (
-        playerVerifications.map((player) => (
-          <div key={player._id} className="verification-item">
-            <p>Name: {player.name}</p>
-            <button className="verify-btn" onClick={() => verifyPlayer(player._id)}>Verify</button>
-          </div>
-        ))
-      ) : (
-        <p className="no-verifications">No players pending verification.</p>
-      )}
+        <h2>Player Verifications</h2>
+        <table className="verification-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {playerVerifications.map((player) => (
+              <tr key={player._id}>
+                <td>{player.name}</td>
+                <td>{player.email}</td>
+                <td>
+                  <button className="verify-btn" onClick={() => verifyPlayer(player._id)}>
+                    Verify
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      {/* Success and Error Messages */}
-      {success && <p className="success-message">{success}</p>}
-      {error && <p className="error-message">{error}</p>}
+      {success && <div className="success-message">{success}</div>}
+      {error && <div className="error-message">{error}</div>}
     </div>
   );
 };

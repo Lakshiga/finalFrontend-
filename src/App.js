@@ -22,13 +22,14 @@ function App() {
     role: '',
     isVerified: false,
   });
-
+   
+  const [loading,setLoading] = useState (true);
   // Simulate fetching user info from local storage or API on page load
   useEffect(() => {
     // You would replace this with actual logic to retrieve user data from localStorage or an API
     const token = localStorage.getItem('token');
     const userData = JSON.parse(localStorage.getItem('user')); // Assuming user data is stored as JSON
-
+    
     if (token && userData) {
       setUser({
         isAuthenticated: true,
@@ -36,7 +37,13 @@ function App() {
         isVerified: userData.isVerified,
       });
     }
+
+    setLoading(false); // Set loading to false when user data is retrieved
+
   }, []);
+   if (loading) {
+    return <div> Loading...</div>
+  }
 
   return (
     <Router>
