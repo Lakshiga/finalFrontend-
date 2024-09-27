@@ -19,35 +19,24 @@ const Login = () => {
         password,
       });
 
-      if (res.data.token || res.data.isVerified === false) {
-        const { token, role, isVerified, msg } = res.data;
+      // Check if response contains token and role information
+      if (res.data.token) {
+        const { token, role } = res.data;
 
+        // Save the token and user role in local storage
+        localStorage.setItem('token', token);
+        localStorage.setItem('role', role); // Save the role separately for easy access
 
-      if (msg) {
-        alert(msg); // Use the msg variable to display the message
-      }
-      
-        if (token) {
-          // Store the token and user details in localStorage
-          localStorage.setItem('token', token);
-          localStorage.setItem('user', JSON.stringify({ role, isVerified }));
-
-          // Check login logic based on role
-          if (role === 'Organizer') {
-            alert('Login successful as organizer.');
-            navigate('/organizer-dashboard');
-          } else if (role === 'admin') {
-            alert('Login successful as admin.');
-            navigate('/admin-dashboard');
-          } else {
-            // For normal users (players, umpires)
-            alert('Login successful.');
-            navigate('/'); // Redirect to home or relevant dashboard for players, umpires
-          }
-        } else if (!isVerified && role === 'Organizer') {
-          // Handle the unverified organizer
-          alert('Login successful as organizer, but waiting for admin verification.');
-          navigate('/organizer-dashboard'); // Navigate to the organizer dashboard but show waiting message
+        // Check login logic based on the role
+        if (role && role.toLowerCase() === 'admin') {
+          alert('Login successful as admin.');
+          navigate('/admin-dashboard'); // Ensure this path matches the route for the admin dashboard
+        } else if (role && role.toLowerCase() === 'organizer') {
+          alert('Login successful as organizer.');
+          navigate('/organizer-dashboard');
+        } else {
+          alert('Login successful.');
+          navigate('/'); // Default navigation for other roles like players
         }
       } else {
         setError('Login failed. Invalid credentials.');
@@ -56,6 +45,7 @@ const Login = () => {
       setError('Login failed. Please check your email and password.');
     }
   };
+
 
   return (
     <div className="login-container">
