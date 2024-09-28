@@ -19,7 +19,7 @@ body {
 
 /* Header */
 header {
-    background-color: #007BFF;
+    background-color: #5ae6f0;
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -44,11 +44,11 @@ nav ul {
 }
 
 nav ul li {
-    margin-right: 20px;
+    margin-right: 30px;
 }
 
 nav ul li a {
-    color: #fff;
+    color: #060f81;
     text-decoration: none;
     font-size: 1.2rem;
 }

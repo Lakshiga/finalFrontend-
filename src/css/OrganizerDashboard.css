@@ -1,5 +1,5 @@
 /* General Body Styling */
-body {
+.body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
@@ -132,7 +132,7 @@ body {
 /* Verify Buttons */
 .verify-btn {
   padding: 8px 16px;
-  background-color: #28a745; /* Green color for verify action */
+  background-color: #042d58; /* Green color for verify action */
   color: white;
   border: none;
   border-radius: 4px;
@@ -141,7 +141,7 @@ body {
 }
 
 .verify-btn:hover {
-  background-color: #218838; /* Darker green on hover */
+  background-color: #29a8b0; /* Darker green on hover */
 }
 
 /* Success and Error Messages */

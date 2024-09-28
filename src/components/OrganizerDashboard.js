@@ -32,7 +32,7 @@ const OrganizerDashboard = () => {
         const config = { headers: { Authorization: `Bearer ${token}` } };
 
         // Fetch organizer status
-        const organizerStatus = await axios.get('http://localhost:5000/api/organizer/organizer/status', config);
+        const organizerStatus = await axios.get('http://localhost:5000/api/organizer/status', config);
         setIsVerified(organizerStatus.data.verified);
 
         // Fetch umpire verifications
